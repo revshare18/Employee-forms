@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OvertimeResource\Pages;
 use App\Filament\Resources\OvertimeResource\RelationManagers;
 use App\Models\Overtime;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\EmployeeLeaveCredit;
 use App\Models\Department;
 use Filament\Forms;
@@ -66,15 +66,15 @@ class OvertimeResource extends Resource
 
 
     public static function getEmployeeDetails(){   
-        $emp = Employee::where('emp_id',auth()->user()->emp_id)->with(['department:departments.id,departments.name','role:roles.id,roles.name','designation:designations.id,is_approver,dept_group_id'])->first(); 
+        $emp = User::where('emp_id',auth()->user()->emp_id)->with(['department:departments.id,departments.name','role:roles.id,roles.name','designation:designations.id,is_approver,dept_group_id'])->first(); 
         
-        self::$role          = $emp->role->name;
-        self::$approver      = $emp->designation->is_approver;
-        self::$dept_group_id = $emp->designation->dept_group_id;
-        self::$emp_id        = $emp['id'];
-        self::$department    = $emp->department->name;
-        self::$fullname      = $emp['firstname'].' '.$emp['lastname'];
-        self::$email         = $emp['email'];
+        self::$role          = @$emp->role->name;
+        self::$approver      = @$emp->designation->is_approver;
+        self::$dept_group_id = @$emp->designation->dept_group_id;
+        self::$emp_id        = @$emp['id'];
+        self::$department    = @$emp->department->name;
+        self::$fullname      = @$emp['firstname'].' '.$emp['lastname'];
+        self::$email         = @$emp['email'];
     }
 
     public static function form(Form $form): Form

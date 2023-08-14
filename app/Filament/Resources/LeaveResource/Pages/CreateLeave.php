@@ -5,7 +5,7 @@ namespace App\Filament\Resources\LeaveResource\Pages;
 use App\Filament\Resources\LeaveResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\EmployeeLeaveCredit;
 use Carbon\Carbon;
 
@@ -79,7 +79,7 @@ class CreateLeave extends CreateRecord
             $img = $value;
         }
        
-        $emp = Employee::select('id')->where('emp_id',auth()->user()->emp_id)->first();
+        $emp = User::select('id')->where('emp_id',auth()->user()->emp_id)->first();
         $data['employee_id']    = $emp['id'];
         $data['status']         = '0';
         $data['days_applied']   = $this->data['days_applied'];

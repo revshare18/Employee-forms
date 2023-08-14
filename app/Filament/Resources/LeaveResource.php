@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LeaveResource\Pages;
 use App\Filament\Resources\LeaveResource\RelationManagers;
 use App\Models\Leave;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\Holiday;
 use App\Models\EmployeeLeaveCredit;
 use Filament\Forms;
@@ -59,15 +59,15 @@ class LeaveResource extends Resource
     protected static ?string $email = '';  
 
     public static function getEmployeeDetails(){   
-        $emp = Employee::where('emp_id',auth()->user()->emp_id)->with(['department:departments.id,departments.name','role:roles.id,roles.name','designation:designations.id,is_approver,dept_group_id'])->first(); 
+        $emp = User::where('emp_id',auth()->user()->emp_id)->with(['department:departments.id,departments.name','role:roles.id,roles.name','designation:designations.id,is_approver,dept_group_id'])->first(); 
         
-        self::$role          = $emp->role->name;
-        self::$approver      = $emp->designation->is_approver;
-        self::$dept_group_id = $emp->designation->dept_group_id;
-        self::$emp_id        = $emp['id'];
-        self::$department    = $emp->department->name;
-        self::$fullname      = $emp['firstname'].' '.$emp['lastname'];
-        self::$email         = $emp['email'];
+        self::$role          = @$emp->role->name;
+        self::$approver      = @$emp->designation->is_approver;
+        self::$dept_group_id = @$emp->designation->dept_group_id;
+        self::$emp_id        = @$emp['id'];
+        self::$department    = @$emp->department->name;
+        self::$fullname      = @$emp['firstname'].' '.$emp['lastname'];
+        self::$email         = @$emp['email'];
     }
 
     public static function compute_date($days_applied,$req_date_from,$allow_weekends,$Holiday){
@@ -110,7 +110,7 @@ class LeaveResource extends Resource
                     Grid::make(2)->schema(function(Closure $set){
                         $fullname = '';
                         if(auth()->user()->role_id != 1){
-                            $emp = Employee::where('emp_id',auth()->user()->emp_id)->first();
+                            $emp = User::where('emp_id',auth()->user()->emp_id)->first();
                             $department = $emp->department;
                             $fullname = $emp['firstname'].' '.$emp['lastname'];
                             $set('Department',$department['name']);
@@ -136,7 +136,7 @@ class LeaveResource extends Resource
 
                         Hidden::make('employee_id')
                         ->afterStateHydrated(function(Closure $set){
-                            $emp = Employee::select('id')->where('emp_id',auth()->user()->emp_id)->first(); 
+                            $emp = User::select('id')->where('emp_id',auth()->user()->emp_id)->first(); 
                             $set('employee_id',$emp['id']);
                         }),
                         Hidden::make('status')->default(0),
@@ -158,7 +158,7 @@ class LeaveResource extends Resource
                         ->options(function () {
                             $arr = null;
                             if(auth()->user()->role_id != 1){
-                                $emp = Employee::where('emp_id',auth()->user()->emp_id)->first();
+                                $emp = User::where('emp_id',auth()->user()->emp_id)->first();
                                 $leave_cred = EmployeeLeaveCredit::leftJoin('leave_types', function($join) {
                                     $join->on('leave_types.id', '=', 'employee_leave_credits.leave_type_id');
                                 })
