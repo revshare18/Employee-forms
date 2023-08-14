@@ -259,7 +259,8 @@ class OvertimeResource extends Resource
                     $approver = self::$approver;
                     $emp_id = self::$emp_id;
                     if($role == 'super_admin'){
-                        $return_value = is_null($record->date_marked_admin && $record->status != 5) ? false : true;
+                       
+                        $return_value = is_null($record->date_marked_admin) && $record->status != 5 ? false : true;
                     }else{
                         $return_value = (is_null($record->date_marked_manager) && is_null($record->date_marked_admin) 
                                         && $approver == 1 && $record->employee_id != $emp_id && $record->status != 5) ? false : true;
