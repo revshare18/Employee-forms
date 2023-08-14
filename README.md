@@ -32,7 +32,7 @@
 
 ## CLONE STEPS
 <ul>
-<li> clone https://gitlab.com/_smx/filamentphp10.git </li>
+<li> clone https://github.com/revshare18/Employee-forms.git </li>
 <li> copy .env.example to .env </li>
 <li> setup .env (database credentials, db name) </li>
 <li> npm install </li>
