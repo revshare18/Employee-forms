@@ -31,19 +31,20 @@
 •	check app/Policy
 
 ## CLONE STEPS
-•	clone https://gitlab.com/_smx/filamentphp10.git 
-•	copy .env.example to .env
-•	setup .env (database credentials, db name)
-•	npm install
-•	composer install
-•	php artisan key:generate
-•	php artisan migrate
-•	php artisan shield:install
-•	composer dump-autoload
-•	npm run build
-•	(local only) php artisan serve
-•	(can access via network) php artisan serve --host=ip
-•	browse http://127.0.0.1:8000/
-
+<ul>
+<li> clone https://gitlab.com/_smx/filamentphp10.git </li>
+<li> copy .env.example to .env </li>
+<li> setup .env (database credentials, db name) </li>
+<li> npm install </li>
+<li> composer install </li>
+<li> php artisan key:generate </li>
+<li> php artisan migrate </li>
+<li> php artisan shield:install </li>
+<li> composer dump-autoload </li>
+<li> npm run build </li>
+<li> (local only) php artisan serve </li>
+<li> (can access via network) php artisan serve --host=ip </li>
+<li> browse http://127.0.0.1:8000/ </li>
+</ul>
 
 
