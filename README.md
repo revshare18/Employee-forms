@@ -1,7 +1,5 @@
 
-
-
-## REQUIREMENTS
+## Resources
 
 ## PHP
 •	v8.2 (https://laragon.org/)
@@ -23,6 +21,9 @@
 ## Icons
 • https://v1.heroicons.com/
 
+
+## FullCalendar
+• https://github.com/saade/filament-fullcalendar
 
 ## New Resource Steps
 •	php artisan make:filament-resource ResourceName
