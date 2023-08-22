@@ -38,7 +38,6 @@
 <li> setup .env (database credentials, db name) </li>
 <li> npm install </li>
 <li> composer install </li>
-<li> php artisan key:generate </li>
 <li> php artisan migrate </li>
 <li> php artisan db:seed --class=LeaveTypeSeeder </li>
 <li> php artisan shield:install </li>
