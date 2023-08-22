@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LeaveResource\Pages;
 use App\Filament\Resources\LeaveResource\RelationManagers;
 use App\Models\Leave;
+use App\Models\LeaveType;
 use App\Models\User;
 use App\Models\Holiday;
 use App\Models\EmployeeLeaveCredit;
@@ -41,6 +42,12 @@ use Carbon\CarbonPeriod;
 use Livewire\TemporaryUploadedFile;
 use Filament\Notifications\Notification;
 
+use App\Filament\Resources\LeaveResource\Widgets\LeaveOverview;
+
+
+
+use Filament\Tables\Filters\Layout;
+
 class LeaveResource extends Resource
 {
     protected static ?string $model = Leave::class;
@@ -56,7 +63,11 @@ class LeaveResource extends Resource
     protected static ?string $emp_id = '';
     protected static ?string $fullname = '';
     protected static ?string $department = '';
-    protected static ?string $email = '';  
+    protected static ?string $email = ''; 
+    
+    protected $queryString = [
+        'tableFilters'
+    ];
 
     public static function getEmployeeDetails(){   
         $emp = User::where('emp_id',auth()->user()->emp_id)->with(['department:departments.id,departments.name','role:roles.id,roles.name','designation:designations.id,is_approver,dept_group_id'])->first(); 
@@ -313,8 +324,12 @@ class LeaveResource extends Resource
                  TextColumn::make('attachment')->label('ATTACHMENT')
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('Leave_type')
+                ->options(function () {
+                    return LeaveType::all()->pluck('name', 'id');
+                })
+                ->attribute('leaveType.name')->label('Leave Type')  
+            ],layout: Layout::AboveContent)
             ->actions([
                 
                 Tables\Actions\Action::make('approve')->label('')->action(function ($record){
@@ -419,6 +434,16 @@ class LeaveResource extends Resource
             //'edit' => Pages\EditLeave::route('/{record}/edit'),
         ];
     }  
+
+
+
+
+    public static function getWidgets() : array
+    {
+        return [
+            LeaveOverview::class,
+        ];
+    }
     
     
 

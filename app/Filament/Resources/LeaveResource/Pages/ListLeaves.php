@@ -6,6 +6,7 @@ use App\Filament\Resources\LeaveResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Actions\Position;
+use App\Filament\Resources\LeaveResource\Widgets\LeaveOverview;
 
 class ListLeaves extends ListRecords
 {
@@ -21,5 +22,13 @@ class ListLeaves extends ListRecords
     protected function getTableActionsPosition(): ?string
     {
     return Position::BeforeCells;
+    }
+
+
+    protected function getHeaderWidgets() : array 
+    {
+        return [
+            LeaveOverview::class
+        ];
     }
 }
