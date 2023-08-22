@@ -1,7 +1,5 @@
 
-
-
-## REQUIREMENTS
+## Resources
 
 ## PHP
 •	v8.2 (https://laragon.org/)
@@ -24,6 +22,9 @@
 • https://v1.heroicons.com/
 
 
+## FullCalendar
+• https://github.com/saade/filament-fullcalendar
+
 ## New Resource Steps
 •	php artisan make:filament-resource ResourceName
 •	check app/Models
@@ -39,6 +40,7 @@
 <li> composer install </li>
 <li> php artisan key:generate </li>
 <li> php artisan migrate </li>
+<li> php artisan db:seed --class=LeaveTypeSeeder </li>
 <li> php artisan shield:install </li>
 <li> composer dump-autoload </li>
 <li> npm run build </li>
