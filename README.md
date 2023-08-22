@@ -40,6 +40,7 @@
 <li> composer install </li>
 <li> php artisan key:generate </li>
 <li> php artisan migrate </li>
+<li> php artisan db:seed --class=LeaveTypeSeeder </li>
 <li> php artisan shield:install </li>
 <li> composer dump-autoload </li>
 <li> npm run build </li>
