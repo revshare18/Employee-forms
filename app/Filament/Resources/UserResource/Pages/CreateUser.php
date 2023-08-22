@@ -8,11 +8,13 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\DB;
 use Filament\Notifications\Notification;
 use App\Models\EmployeeLeaveCredit;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CreateUsers;
 
 class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
-
+    public $pass = '';
 
     protected function getRedirectUrl(): string
     {
@@ -22,13 +24,15 @@ class CreateUser extends CreateRecord
   
     protected function mutateFormDataBeforeCreate(array $data): array
 	{
-        //dd($data);
-        $data['password'] = '0p;/)P:?';
+        $length = 8;
+        $randomletter = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, $length);
+        $this->pass = $randomletter;
+        $data['password'] = $randomletter;
         $data['created_by'] =  auth()->id();
 		$data['created_at'] = now();
 		$data['updated_at'] = null;
+        $data['password'] = \Hash::make($data['password']);
 	    return $data;
-
 	}
 	protected function getCreatedNotification(): ?Notification {
 		return Notification::make()
@@ -39,6 +43,10 @@ class CreateUser extends CreateRecord
 
     protected function afterCreate(): void
     {
+
+        $params = array('name'=>$this->data['name'],'password'=>$this->pass);
+        Mail::to($this->data['email'])->send(new CreateUsers($params));
+
         DB::table('model_has_roles')->insert([
             'role_id' => $this->record->role_id,
             'model_type' => 'App\Models\User',
